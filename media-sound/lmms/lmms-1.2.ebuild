@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-inherit cmake-utils xdg-utils
+inherit cmake-utils xdg-utils bash-completion-r1
 
 DESCRIPTION="Cross-platform music production software"
 HOMEPAGE="https://lmms.io"
@@ -86,6 +86,12 @@ src_configure() {
 		-DWANT_SF2=$(usex fluidsynth)
 	)
 	cmake-utils_src_configure
+}
+
+src_install() {
+	cmake-utils_src_install
+
+	newbashcomp doc/bash-completion/${PN} ${PN}
 }
 
 pkg_postinst() {

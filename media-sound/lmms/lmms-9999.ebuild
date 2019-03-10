@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-inherit cmake-utils xdg-utils
+inherit cmake-utils xdg-utils bash-completion-r1
 
 DESCRIPTION="Cross-platform music production software"
 HOMEPAGE="https://lmms.io"
@@ -20,7 +20,7 @@ fi
 LICENSE="GPL-2 LGPL-2"
 SLOT="0"
 
-IUSE="alsa debug fluidsynth jack libgig ogg portaudio pulseaudio sdl soundio stk vst"
+IUSE="bash-completion alsa debug fluidsynth jack libgig ogg portaudio pulseaudio sdl soundio stk vst"
 
 COMMON_DEPEND="
 	dev-qt/qtcore:5
@@ -84,8 +84,15 @@ src_configure() {
 		-DWANT_STK=$(usex stk)
 		-DWANT_VST=$(usex vst)
 		-DWANT_SF2=$(usex fluidsynth)
+		-DINSTALL_BASH_COMPLETION=OFF
 	)
 	cmake-utils_src_configure
+}
+
+src_install() {
+	cmake-utils_src_install
+	use bash-completion && \
+		newbashcomp doc/bash-completion/lmms lmms
 }
 
 pkg_postinst() {
