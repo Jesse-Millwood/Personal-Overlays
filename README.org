@@ -1,0 +1,15 @@
+#+TITLE: README
+
+
+* Personal Gentoo Overlay
+
+  - Create a configure file in =/etc/portage/repos.conf/jesse.conf= with:
+#+BEGIN_SRC
+[jesse]
+location = /usr/local/portage/jesse-overlay
+sync-type = git
+sync-uri = https://github.com/Jesse-Millwood/personal-overlay
+priority=9999
+#+END_SRC
+
+  - Then run =emerge --sync=
